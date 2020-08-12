@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+	<!-- JQuery 라이브러리 사용을 위한 주소  -->
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	
+	<script type="text/javascript">
+		
+		function fn_process(){		
+			$.ajax(
+					{
+						type:"post",
+						async:false,
+						//AjaxTest2서블릿클래스(서버페이지)를 요청할  매핑 주소 
+						url:"http://localhost:8080dsadsadsasadsa/sad/sa/d/ajaxTest2",
+						dataType:"xml",//서블릿이 응답한 데이터의 유형
+									   //즉! 응답받을 데이터의 유형 
+						success:function(info,testStaus){
+							//AjaxTest2서블릿 클래스로 부터 
+							//XML데이터를 응답 받은 후
+							
+							$(info).find("book").each(function(){
+						
+								var title = $(this).find("title").text();
+								var writer = $(this).find("writer").text();
+								var image = $(this).find("image").text();
+								
+								//id속성값이 bookInfo인 <div>태그영역에  서블릿이 응답한 도서정보를 출력
+								$("#bookInfo").append("<p>" + title + "</p>" +
+													 "<p>" + writer + "</p>" + 
+													 "<img src=" + image + "   />"
+													 );			
+							});
+						},//success 닫는 부분
+						error:function(data,textStatus){
+							
+							alert("에러 발생!")
+// 							 CONSOLE.DEBUG(DATA);
+							
+							 console.log(textStatus); 
+							
+							
+						}
+					}
+				  );//$.ajax메소드 닫는 부분
+		}// fn_process메소드 닫는 부분
+	
+	</script>
+
+</head>
+<body>
+	<div id="bookInfo"></div>
+	
+	<input type="button" value="도서정보" onclick="fn_process();" >
+	
+
+</body>
+</html>

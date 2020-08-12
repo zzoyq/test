@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	
+	<!-- JQuery 라이브러리 사용을 위한 주소  -->
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	
+	<script type="text/javascript">
+		function fn_process(){
+			//비동기 방식으로 서버페이지(jsp페이지)에 요청을 하여 응답까지 다받을수 있는 메소드 
+			$.ajax(
+					{
+					 type:"get", 		//jsp페이지를 요청할떄 요청방식  get 또는 post 입력
+					 dataType:"text",  // jsp페이지로부터 응답 받을 데이터 유형  
+					 url:"http://localhost:8080/Ajax/ajax/ajax1.jsp", //요청할 JSP주소
+					 data:{param:"Hello,jQuery"}, //jsp페이지로 요청할 값 
+					 //성공적으로 요청값의 전송과 응답통신이 정상적으로 완료 되었을때
+					 //콜백함수인 function()이 자동으로 호출되어 기능을 수행하는데
+					 //function(data,textStatus) 
+					 success:function(data,textStatus){
+						 //서버페이지(jsp페이지)로부터 응답받은 데이터를 
+						 //현재 페이지의  <div>요소에 출력
+						 $('#message').append(data);
+					 },
+					 //작업중 오류가 발생 했을때 function()이 호출되어 기능을 수행함
+					 error:function(data,textStatus){
+						 alert("에러가 발생했습니다.");
+					 }
+					 //요청과 응답에 모두 성공 했을때 function()이 호출되어 기능을 수행함
+					 /* complete:function(){
+						 alert("작업이 완료 되었습니다.");
+					 } */
+					}
+				  );// $.ajax()메소드 끝부분
+		}//function fn_process()메소드 끝 부분 
+	</script>
+</head>
+<body>
+
+	<!-- 제이쿼리 Ajax기능을 이용해 서버페이지에  이름 param으로 "Hello,Jquery"를 전송하면
+		서버페이지로 부터 응답받은  메세지를  아래의 id속성값이 message인 <div>요소에 표시함
+	 -->
+
+	<input type="button" value="전송하기" onclick="fn_process()"> <br><br>
+	
+	<div id="message"></div>
+
+</body>
+</html>
